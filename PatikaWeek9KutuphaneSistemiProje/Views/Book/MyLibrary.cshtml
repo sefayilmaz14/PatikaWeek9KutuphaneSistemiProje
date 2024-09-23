@@ -1,0 +1,57 @@
+﻿@model List<BookListViewModel>
+
+<html>
+<head>
+    <style>
+        .dropdown-right {
+            float: right;
+            margin-right: 35px; 
+            margin-top: 30px; 
+        }
+
+
+        .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden; 
+        }
+
+    </style>
+</head>
+
+<body>
+    
+    
+
+
+    <div class="container mt-5">
+        <div class="row">
+            @foreach (var book in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card" style="width: 14rem;">
+                        <img src="https://www.dinamikegitim.com/tema/genel/uploads/haberler/kitaplar-696x435.jpg" class="card-img-top" alt="@book.Title"> 
+                        <div class="card-body">
+                            <h5 class="card-title">@book.Title</h5> 
+                            <p class="card-text">
+                                @book.AuthorName
+                                @book.GenreName
+                            </p>
+                            <a asp_controller="Book" asp-action="Detail" asp-route-id="@book.Id" class="btn btn-primary btn-sm">Detaylar</a>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

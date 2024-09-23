@@ -1,0 +1,43 @@
+﻿@model PatikaWeek9KutuphaneSistemiProje.Models.AuthorDetailViewModel
+
+@{
+    var books = (List<Book>)ViewBag.Books;
+    var genres = (List<Genre>)ViewBag.Genres;
+}
+
+<div class="page-center" style="margin-top: 70px; margin-left: 300px;">
+    
+    <div class="card" style="width: 40rem;">
+        
+        <img src="https://dalamantv.com/wp-content/uploads/2017/11/nasil-yazar-olunur_646x340.jpg" class="card-img-top" alt="@Model.FirstName" style="height: 200px; object-fit: cover;">
+
+
+        <div class="card-body">
+            <!-- Kitap başlığı -->
+            <h5 class="card-title">@Model.FirstName @Model.LastName</h5>
+
+
+            <!-- Kitap hakkında bilgiler -->
+            <p class="card-text">
+                Yazar Hakkında: @Model.About
+                <br>
+                <br> <strong>Doğum Tarihi:</strong> @Model.DateOfBirth
+                <br>
+                <br>
+                <strong>Sitede Bulunan Kitapları:</strong>
+                
+                @foreach (var book in books.Where(x => x.AuthorId == Model.Id))
+                {
+                <p>@book.Title</p>
+                }
+            </p>
+
+
+                
+            </p>
+
+            
+       
+        </div>
+    </div>
+</div>

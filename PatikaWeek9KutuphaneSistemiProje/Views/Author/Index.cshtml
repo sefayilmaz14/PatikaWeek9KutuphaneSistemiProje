@@ -1,0 +1,39 @@
+﻿@model List<AuthorListViewModel>
+<html>
+<head>
+
+
+</head>
+
+<body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp_controller="Author" asp-action="Add" class="btn btn-primary">Yeni Yazar Ekle</a>
+    }
+    <div class="container mt-5">
+        <div class="row">
+            @foreach (var author in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card" style="width: 18rem;">
+                        
+                        <img src="https://dalamantv.com/wp-content/uploads/2017/11/nasil-yazar-olunur_646x340.jpg" class="card-img-top" alt="@author.FirstName">
+                        <div class="card-body">
+                            <h5 class="card-title">@($"{author.FirstName} {author.LastName}")</h5>
+                            <p class="card-text">
+                                Doğum Tarihi: @author.DateOfBirth.ToString("dd/MM/yyyy")
+                            </p>
+                            <a asp_controller="Author" asp-action="Detail" asp-route-id="@author.Id" class="btn btn-primary">Detaylar</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp_controller="Book" asp-action="Edit" asp-route-id="@author.Id" class="btn btn-primary">Düzenle</a>
+                                <a asp_controller="Book" asp-action="DeletedBook" asp-route-id="@author.Id" class="btn btn-primary">Sil</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

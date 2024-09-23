@@ -1,0 +1,51 @@
+﻿@model BookEditViewModel
+
+<h3>Kitap Düzenleme</h3>
+
+<form method="post" asp-controller="Book" asp-action="Edit">
+
+    <input asp-for="Id" />
+    <input asp-for="GenreId" />
+
+    <div class="ml-custom">
+        <label>Başlık</label>
+        <input asp-for="Title" class="form-control" style=" width: 700px;" type="text" />
+        <span asp-validation-for="Title" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <div class="ml-custom">
+        <label>Kitap Türü Seçiniz</label>
+        <select asp-for="GenreId" asp-items="@(new SelectList(ViewBag.Genres,"GenreId","GenreName"))" class="form-control" style=" width: 700px;"></select>
+        <span asp-validation-for="GenreId" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <div class="ml-custom">
+        <label>Kopya Sayısı</label>
+        <textarea asp-for="CopiesAvailable" rows="4" class="form-control" style="width: 700px; "></textarea>
+        <span asp-validation-for="CopiesAvailable" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <div class="ml-custom">
+        <label>Isbn Numarası</label>
+        <textarea asp-for="Isbn" rows="4" class="form-control" style=" width: 700px;"></textarea>
+        <span asp-validation-for="Isbn" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <div class="ml-custom mt-3">
+        <label>Kitap Özeti</label>
+        <textarea asp-for="Summary" rows="4" class="form-control" style="width: 700px;"></textarea>
+        <span asp-validation-for="Summary" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <div class="ml-custom">
+        <label>Isbn Numarası</label>
+        <select asp-items="@(new SelectList(ViewBag.Owners,"Id","FirstName"))" class="form-control" style=" width: 700px;"></select>
+        <span asp-validation-for="Isbn" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+
+
+
+
+    <button type="submit" class="btn btn-success mt-2">Kaydet</button>
+</form>

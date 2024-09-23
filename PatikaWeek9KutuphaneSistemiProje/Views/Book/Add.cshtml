@@ -1,0 +1,60 @@
+﻿@model BookAddViewModel
+
+<h3>Kitap Ekleme</h3>
+
+<form method="post" asp-controller="Book" asp-action="Add">
+    <div class="ml-custom">
+        <label>Başlık</label>
+        <input asp-for="Title" class="form-control" style=" width: 700px;" type="text" />
+        <span asp-validation-for="Title" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <!-- Kitap Türü Seçiniz -->
+    <div class="row ml-custom">
+        <div class="col-md-8">
+            <label>Kitap Türü Seçiniz</label>
+            <select asp-for="GenreId" asp-items="@(new SelectList(ViewBag.Genres,"GenreId","GenreName"))" class="form-control" style="width: 100%;"></select>
+            <span asp-validation-for="GenreId" class="text-danger mt-2 fw-bold"></span>
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <a asp-controller="Genre" asp-action="Add" class="btn btn-secondary">Tür Ekle</a>
+        </div>
+    </div>
+
+    <!-- Kopya Sayısı -->
+    <div class="ml-custom mt-3">
+        <label>Kopya Sayısı</label>
+        <textarea asp-for="CopiesAvailable" rows="4" class="form-control" style="width: 700px;"></textarea>
+        <span asp-validation-for="CopiesAvailable" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <!-- Isbn Numarası -->
+    <div class="ml-custom mt-3">
+        <label>Isbn Numarası</label>
+        <textarea asp-for="Isbn" rows="4" class="form-control" style="width: 700px;"></textarea>
+        <span asp-validation-for="Isbn" class="text-danger mt-2 fw-bold"></span>
+    </div>
+    <!--Kitap Özeti-->
+    <div class="ml-custom mt-3">
+        <label>Kitap Özeti</label>
+        <textarea asp-for="Summary" rows="4" class="form-control" style="width: 700px;"></textarea>
+        <span asp-validation-for="Summary" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <!-- Yazar Seçiniz -->
+    <div class="row ml-custom mt-3">
+        <div class="col-md-8">
+            <label>Yazar Seçiniz</label>
+            <select asp-for="AuthorId" asp-items="@(new SelectList(ViewBag.Authors,"Id","FirstName"))" class="form-control" style="width: 100%;"></select>
+            <span asp-validation-for="AuthorId" class="text-danger mt-2 fw-bold"></span>
+        </div>
+        <!-- Yazar seçim ekranında istenilen yazar yok sise eklenmesi için-->
+        <div class="col-md-4 d-flex align-items-end">
+            <a asp-controller="Author" asp-action="Add" class="btn btn-secondary">Yazar Ekle</a>
+
+        </div>
+    </div>
+
+    <!-- Kaydet Butonu -->
+    <button type="submit" class="btn btn-success mt-4">Kaydet</button>
+</form>

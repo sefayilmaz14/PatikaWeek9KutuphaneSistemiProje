@@ -1,0 +1,29 @@
+﻿@model AuthorEditViewModel
+<html>
+</html>
+<h3>Yazar Ekleme</h3>
+
+<form method="post" asp-controller="Author" asp-action="Edit">
+    <input asp-for="Id" />
+    <div class="ml-custom">
+        <label>İsim</label>
+        <input asp-for="FirstName" class="form-control" style=" width: 700px;" type="text" />
+        <span asp-validation-for="FirstName" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <div class="ml-custom">
+        <label>Soyisim</label>
+        <textarea asp-for="LastName" rows="4" class="form-control" style=" width: 700px;"></textarea>
+        <span asp-validation-for="LastName" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+    <div class="ml-custom">
+        <label>Doğum Tarihi</label>
+        <textarea asp-for="DateOfBirth" rows="4" class="form-control" style="width: 700px; "></textarea>
+        <span asp-validation-for="DateOfBirth" class="text-danger mt-2 fw-bold"></span>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-success mt-2">Kaydet</button>
+</form>

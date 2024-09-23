@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabit Offcanvas ve Navbar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://static.vecteezy.com/ti/gratis-vektor/p3/181584-libro-iconen-vektor.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            min-height: 100vh;
+        }
+
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(255, 255, 255, 0.7);
+                z-index: 0;
+            }
+
+        .navbar-custom {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1000; 
+            background-color: rgba(255, 255, 255, 0.8); 
+            font-weight: bold;
+            width: auto; 
+            padding: 0px 10px; 
+            height: auto; 
+        }
+
+
+
+            .navbar-custom .nav-link {
+                color: black;
+            }
+
+                .navbar-custom .nav-link:hover {
+                    color: #333;
+                }
+
+        .offcanvas-custom-width {
+            width: 250px !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 94.5vh;
+            z-index: 1050;
+            background-color: #f8f9fa;
+        }
+
+        .offcanvas-title {
+            font-size: 1.7rem;
+            margin-left: 10px;
+            margin-top: 20px;
+            width: 100%;
+            color: black;
+        }
+
+        .offcanvas-body .btn {
+            font-size: 1.1rem;
+            text-align: left;
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 15px;
+        }
+
+            .offcanvas-body .btn i {
+                margin-right: 10px;
+            }
+
+        .offcanvas-body {
+            margin-top: 25px;
+        }
+
+        .content-with-offset {
+            margin-left: 250px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #343a40;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sabit Offcanvas Bileşeni -->
+    <div class="offcanvas-custom-width d-flex flex-column">
+        <div class="offcanvas-header">
+            <a  class="offcanvas-title">
+                <i class="bi bi-house-door-fill"></i> Kitap Bahçesi
+            </a>
+        </div>
+
+        <div class="offcanvas-body d-flex flex-column flex-grow-1">
+            <div class="d-grid gap-3 col-12">
+                <a asp-controller="Book" asp-action="Index" class="btn"><i class="bi bi-book"></i> Kitaplar</a>
+                <a asp-controller="Author" asp-action="Index" class="btn"><i class="bi bi-person"></i> Yazarlar</a>
+
+                <!-- Kullanıcı giriş yapmışsa Favorilerim ve Kütüphanem butonlarını göster -->
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Book" asp-action="MyLibrary" class="btn"><i class="bi bi-journal"></i> Kütüphanem</a>
+                }
+            </div>
+
+            <div class="mt-auto">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Auth" asp-action="SignOut" class="btn"><i class="bi bi-box-arrow-right"></i> Çıkış Yap</a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="About" class="nav-link active"><i class="bi bi-info-circle"></i> Hakkında</a>
+                    </li>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="Auth" asp-action="SignUp" class="nav-link active"><i class="bi bi-pencil-square"></i> Kayıt Ol</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Auth" asp-action="SignIn" class="nav-link active"><i class="bi bi-box-arrow-in-right"></i> Giriş Yap</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="Home" asp-action="Contact" class="nav-link active"><i class="bi bi-pencil-square"></i> İletişim</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" style="padding: 8px;">@User.Claims.FirstOrDefault(x => x.Type == "email")?.Value</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sayfa içeriği -->
+    <div class="container content-with-offset">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2024 - Kitap Bahçesi - Tüm Hakları Saklıdır
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

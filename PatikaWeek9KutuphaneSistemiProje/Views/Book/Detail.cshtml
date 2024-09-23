@@ -1,0 +1,40 @@
+﻿@model PatikaWeek9KutuphaneSistemiProje.Models.BookDetailViewModel
+
+@{
+    var authors = (List<Author>)ViewBag.Owners;
+    var genres = (List<Genre>)ViewBag.Genres;
+}
+
+<div class="page-center" style="margin-top: 70px; margin-left: 300px;">
+   
+    <div class="card" style="width: 40rem;">
+        
+        <img src="https://www.dinamikegitim.com/tema/genel/uploads/haberler/kitaplar-696x435.jpg" class="card-img-top" alt="@Model.Title" style="height: 200px; object-fit: cover;>
+
+        <div class="card-body">
+            <!-- Kitap başlığı -->
+            <h5 class="card-title">@Model.Title</h5>
+
+            <!-- Kitap hakkında bilgiler -->
+            <p class="card-text">
+                Kitap Konusu: @Model.Summary
+               <br > Yazar: @authors.FirstOrDefault(x => x.Id == Model.AuthorId)?.FirstName
+                @authors.FirstOrDefault(x => x.Id == Model.AuthorId)?.LastName
+                <br>
+                Tür: @genres.FirstOrDefault(x => x.GenreId == Model.GenreId)?.GenreName <br>
+                ISBN: @Model.Isbn <br>
+                Yayın Tarihi: @Model.PublishDate.ToString("dd MMM yyyy") <br>
+                Basılan Kopya Sayısı: @Model.CopiesAvailable
+            </p>
+
+          
+        @if (User.Identity.IsAuthenticated)
+        {
+                <a asp-controller="Book" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-sm">Düzenle</a>
+
+                <a asp_controller="Book" asp-action="DeletedBook" asp-route-id="@Model.Id" class="btn btn-primary btn-sm" style="margin-top: 10px;">Sil</a>
+                <a asp-controller="Book" asp-action="Library" asp-route-id="@Model.Id" class="btn btn-primary btn-sm" style="margin-top: 10px;">Kütüphaneme Ekle</a>
+        }
+        </div>
+    </div>
+</div>
